@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You made it! — Ashton's First Website</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <p class="counter-text" id="msg">Loading...</p>
+    <a href="index.html" class="back">← back home</a>
+  </main>
+
+  <script>
+    function ordinal(n) {
+      const s = ['th', 'st', 'nd', 'rd'];
+      const v = n % 100;
+      return n + (s[(v - 20) % 10] || s[v] || s[0]);
+    }
+
+    async function load() {
+      const el = document.getElementById('msg');
+      try {
+        const res = await fetch('https://api.countapi.xyz/hit/ashmaxstudio.com/cta');
+        const data = await res.json();
+        const num = ordinal(data.value);
+        el.innerHTML = `You are the <strong>${num}</strong> person to click on this button on my first website. Cheers!`;
+      } catch {
+        el.textContent = "You made it! (Couldn't load the count right now — but you're here!)";
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>
