@@ -25,9 +25,9 @@
     async function load() {
       const el = document.getElementById('msg');
       try {
-        const res = await fetch('https://api.countapi.xyz/hit/ashmaxstudio.com/cta');
+        const res = await fetch('https://api.counterapi.dev/v1/ashmaxstudio/cta/up');
         const data = await res.json();
-        const num = ordinal(data.value);
+        const num = ordinal(data.count);
         el.innerHTML = `You are the <strong>${num}</strong> person to click on this button on my first website. Cheers!`;
       } catch {
         el.textContent = "You made it! (Couldn't load the count right now — but you're here!)";
