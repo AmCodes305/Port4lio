@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The First Click — Ashton's First Website</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    #dvd-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    #dvd-text {
+      position: absolute;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      max-width: 220px;
+      text-align: center;
+      line-height: 1.5;
+      color: #e74c3c;
+      opacity: 0;
+      transition: color 0.1s;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="dvd-container">
+    <div id="dvd-text">This was the first page ever created — the start of my portfolio.</div>
+  </div>
+
+  <main class="page">
+    <h1>Hi I am Ashton.<br>Welcome to my first website.</h1>
+    <a href="counter.html" class="btn">click HERE</a>
+  </main>
+
+  <script>
+    const el = document.getElementById('dvd-text');
+    const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c', '#e67e22'];
+    let colorIdx = 0;
+    let x, y, dx, dy, elW, elH;
+
+    function init() {
+      elW = el.offsetWidth;
+      elH = el.offsetHeight;
+      x = Math.random() * (window.innerWidth - elW);
+      y = Math.random() * (window.innerHeight - elH);
+      dx = (Math.random() > 0.5 ? 1 : -1) * 1.4;
+      dy = (Math.random() > 0.5 ? 1 : -1) * 1.1;
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      el.style.color = colors[colorIdx];
+      el.style.opacity = '1';
+      requestAnimationFrame(bounce);
+    }
+
+    function bounce() {
+      x += dx;
+      y += dy;
+
+      let hitX = false;
+      let hitY = false;
+
+      if (x <= 0) { x = 0; dx = Math.abs(dx); hitX = true; }
+      if (x + elW >= window.innerWidth) { x = window.innerWidth - elW; dx = -Math.abs(dx); hitX = true; }
+      if (y <= 0) { y = 0; dy = Math.abs(dy); hitY = true; }
+      if (y + elH >= window.innerHeight) { y = window.innerHeight - elH; dy = -Math.abs(dy); hitY = true; }
+
+      if (hitX || hitY) {
+        colorIdx = (colorIdx + 1) % colors.length;
+        el.style.color = colors[colorIdx];
+      }
+
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      requestAnimationFrame(bounce);
+    }
+
+    window.addEventListener('resize', () => {
+      elW = el.offsetWidth;
+      elH = el.offsetHeight;
+    });
+
+    // Wait for fonts to load before measuring element size
+    document.fonts.ready.then(init);
+  </script>
+</body>
+</html>
