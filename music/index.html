@@ -13,12 +13,135 @@
     body {
       font-family: 'Inter', system-ui, sans-serif;
       min-height: 100dvh;
-      background: linear-gradient(to bottom, #b8d4e8 0%, #f5c9a0 45%, #f0a870 70%, #ffd59b 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 2rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ── Night sky background ── */
+    .bg-night {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(to bottom,
+        #030508 0%,
+        #080f1e 30%,
+        #0a1e30 65%,
+        #061420 100%
+      );
+    }
+
+    /* ── Stars ── */
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .stars::before, .stars::after { content: ''; position: absolute; inset: 0; }
+    .stars::before {
+      background-image:
+        radial-gradient(1px 1px at  8% 12%, rgba(255,255,255,0.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 18%  5%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 28% 20%, rgba(255,255,255,0.95) 0%, transparent 100%),
+        radial-gradient(1px 1px at 38%  9%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 16%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 62%  4%, rgba(255,255,255,0.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 72% 22%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 83%  8%, rgba(255,255,255,0.85) 0%, transparent 100%),
+        radial-gradient(1px 1px at 92% 18%, rgba(255,255,255,0.65) 0%, transparent 100%),
+        radial-gradient(1px 1px at  4% 35%, rgba(255,255,255,0.75) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 15% 42%, rgba(255,255,255,0.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 38%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 58% 32%, rgba(255,255,255,0.95) 0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 36%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 92% 28%, rgba(255,255,255,0.7) 0%, transparent 100%);
+    }
+    .stars::after {
+      background-image:
+        radial-gradient(1px 1px at 12% 58%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 65%, rgba(255,255,255,0.75) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 48% 55%, rgba(255,255,255,0.85) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 70%, rgba(255,255,255,0.65) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at  5% 80%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 22% 85%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 55% 82%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 88%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 78%, rgba(255,255,255,0.85) 0%, transparent 100%);
+    }
+
+    /* ── Aurora ── */
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .aurora-band {
+      position: absolute;
+      left: -10%;
+      width: 120%;
+      border-radius: 50%;
+      filter: blur(55px);
+    }
+    .aurora-band:nth-child(1) {
+      top: 5%;
+      height: 200px;
+      background: radial-gradient(ellipse 80% 50% at 50% 50%,
+        rgba(20, 210, 130, 0.75) 0%, rgba(0, 180, 100, 0.35) 50%, transparent 80%);
+      animation: aurora1 13s ease-in-out infinite alternate;
+    }
+    .aurora-band:nth-child(2) {
+      top: 16%;
+      height: 160px;
+      background: radial-gradient(ellipse 70% 50% at 50% 50%,
+        rgba(0, 230, 170, 0.55) 0%, rgba(0, 200, 140, 0.20) 50%, transparent 80%);
+      animation: aurora2 17s ease-in-out infinite alternate;
+    }
+    .aurora-band:nth-child(3) {
+      top: 26%;
+      height: 120px;
+      background: radial-gradient(ellipse 90% 50% at 50% 50%,
+        rgba(80, 220, 200, 0.45) 0%, rgba(40, 190, 170, 0.15) 50%, transparent 80%);
+      animation: aurora3 11s ease-in-out infinite alternate;
+    }
+    .aurora-band:nth-child(4) {
+      top: 10%;
+      height: 240px;
+      background: radial-gradient(ellipse 60% 50% at 60% 50%,
+        rgba(0, 180, 120, 0.30) 0%, rgba(0, 150, 90, 0.10) 50%, transparent 80%);
+      animation: aurora4 19s ease-in-out infinite alternate;
+    }
+    @keyframes aurora1 {
+      0%   { transform: translateX(0%)   scaleY(1.00); }
+      25%  { transform: translateX(6%)   scaleY(1.20); }
+      60%  { transform: translateX(-4%)  scaleY(0.85); }
+      100% { transform: translateX(10%)  scaleY(1.15); }
+    }
+    @keyframes aurora2 {
+      0%   { transform: translateX(0%)   scaleY(1.00); }
+      30%  { transform: translateX(-8%)  scaleY(1.30); }
+      65%  { transform: translateX(5%)   scaleY(0.90); }
+      100% { transform: translateX(-12%) scaleY(1.10); }
+    }
+    @keyframes aurora3 {
+      0%   { transform: translateX(0%)   scaleY(1.00); }
+      40%  { transform: translateX(9%)   scaleY(0.80); }
+      70%  { transform: translateX(-6%)  scaleY(1.25); }
+      100% { transform: translateX(14%)  scaleY(0.95); }
+    }
+    @keyframes aurora4 {
+      0%   { transform: translateX(0%)   scaleY(1.00); }
+      35%  { transform: translateX(-10%) scaleY(1.40); }
+      70%  { transform: translateX(7%)   scaleY(0.75); }
+      100% { transform: translateX(-5%)  scaleY(1.20); }
     }
 
     /* ── Header ── */
@@ -30,24 +153,24 @@
       align-items: flex-start;
       justify-content: space-between;
       z-index: 100;
-      background: rgba(255, 240, 220, 0.25);
+      background: rgba(5, 10, 20, 0.40);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
     }
-
     .brand { display: flex; flex-direction: column; gap: 0.35rem; }
-    .brand-name { font-size: 1.15rem; font-weight: 700; color: #1c0e06; }
-
+    .brand-name { font-size: 1.15rem; font-weight: 700; text-decoration: none; color: #d8f0ec; }
     nav { display: flex; gap: 1.75rem; align-items: center; padding-top: 0.15rem; }
     nav a {
       font-size: 0.88rem; font-weight: 600; text-decoration: none;
-      color: #1c0e06; opacity: 0.6; transition: opacity 0.15s;
+      color: #d8f0ec; opacity: 0.55; transition: opacity 0.15s;
     }
     nav a:hover { opacity: 1; }
     nav a.active { opacity: 1; }
 
-    /* ── Loading card ── */
+    /* ── Card ── */
     .card {
+      position: relative;
+      z-index: 10;
       text-align: center;
       max-width: 560px;
       width: 100%;
@@ -59,13 +182,13 @@
       font-size: clamp(2.8rem, 8vw, 5rem);
       text-transform: uppercase;
       letter-spacing: -0.02em;
-      color: #fff8f0;
+      color: #e0faf4;
       text-shadow:
-        1px 1px 0 #b05a10,
-        2px 2px 0 #b05a10,
-        3px 3px 0 #b05a10,
-        4px 4px 0 #9a4e0c,
-        6px 6px 16px rgba(0,0,0,0.2);
+        1px 1px 0 #006644,
+        2px 2px 0 #006644,
+        3px 3px 0 #006644,
+        4px 4px 0 #004d33,
+        6px 6px 20px rgba(0, 200, 140, 0.4);
       margin-bottom: 0.5rem;
     }
 
@@ -74,110 +197,92 @@
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #7a4e28;
+      color: #7ecfc0;
       margin-bottom: 1.25rem;
     }
 
-    /* ── 3D Bar ── */
+    /* ── 3D Bar (aurora teal) ── */
     .bar-wrap {
       width: 100%;
       position: relative;
-      padding-top: 22px;   /* room for top face */
-      padding-bottom: 16px; /* room for bottom face */
+      padding-top: 22px;
+      padding-bottom: 16px;
       margin-bottom: 1rem;
     }
-
     .bar-track {
       width: 100%;
       height: 34px;
-      background: rgba(20, 8, 0, 0.20);
+      background: rgba(0, 30, 20, 0.40);
       border-radius: 2px;
       position: relative;
       overflow: visible;
     }
-
     .bar-fill {
       height: 100%;
       width: 0%;
       border-radius: 2px;
       position: relative;
       overflow: visible;
-
-      /* FRONT FACE */
       background: linear-gradient(to bottom,
-        #ffd060 0%,
-        #f5a020 18%,
-        #e06820 55%,
-        #b03010 85%,
-        #8a2408 100%
+        #80ffcc 0%,
+        #20d48a 18%,
+        #00a866 55%,
+        #007844 85%,
+        #005530 100%
       );
-
-      /* BOTTOM FACE — solid stacked shadows */
       box-shadow:
-        0  5px 0 #7a2010,
-        0 10px 0 #621808,
-        0 14px 0 #4e1206;
+        0  5px 0 #005030,
+        0 10px 0 #003d24,
+        0 14px 0 #002c1a;
     }
-
-    /* TOP FACE — skewed parallelogram going up-right */
     .bar-fill::before {
       content: '';
       position: absolute;
-      left: 0;
-      right: 0;
+      left: 0; right: 0;
       height: 22px;
       bottom: 100%;
-      background: linear-gradient(to right,
-        #ffe898,
-        #f5c050,
-        #e0a030
-      );
+      background: linear-gradient(to right, #b0ffe8, #60e8b0, #20c888);
       transform-origin: bottom left;
       transform: skewX(-45deg);
     }
-
-    /* RIGHT END CAP — parallelogram connecting top face + front face */
     .bar-fill::after {
       content: '';
       position: absolute;
       left: 100%;
       top: -22px;
       width: 22px;
-      height: calc(100% + 22px); /* 34px front + 22px top = 56px */
+      height: calc(100% + 22px);
       background: linear-gradient(to bottom,
-        #f0b040 0%,
-        #c04020 38%,
-        #7a1c0a 100%
+        #40d890 0%,
+        #009955 38%,
+        #004d28 100%
       );
-      /* Parallelogram: front-top(0,22px) → cap-top(22px,0) → cap-bottom(22px,34px) → front-bottom(0,56px) */
       clip-path: polygon(0 22px, 22px 0, 22px calc(100% - 22px), 0 100%);
     }
 
     .bar-pct {
       font-size: 0.82rem;
       font-weight: 700;
-      color: #7a4e28;
+      color: #7ecfc0;
       letter-spacing: 0.05em;
       margin-bottom: 2rem;
     }
-
     .subtext {
       font-size: 0.9rem;
-      color: #7a4e28;
+      color: #7ecfc0;
       line-height: 1.6;
     }
-
     .back {
       display: inline-block;
       margin-top: 2.5rem;
       font-size: 0.85rem;
       font-weight: 600;
-      color: #7a4e28;
+      color: #7ecfc0;
       text-decoration: none;
       border-bottom: 1px solid currentColor;
       transition: color 0.15s;
     }
-    .back:hover { color: #1c0e06; }
+    .back:hover { color: #e0faf4; }
 
     @media (max-width: 560px) {
       header { flex-direction: column; gap: 1rem; padding: 1.2rem 1.25rem; }
@@ -187,11 +292,21 @@
   </style>
 </head>
 <body>
+  <div class="bg-night"></div>
+  <div class="stars"></div>
+  <div class="aurora">
+    <div class="aurora-band"></div>
+    <div class="aurora-band"></div>
+    <div class="aurora-band"></div>
+    <div class="aurora-band"></div>
+  </div>
+
   <header>
     <div class="brand">
-      <span class="brand-name">AM World 🌍</span>
+      <a href="/" class="brand-name">AM World 🌍</a>
     </div>
     <nav>
+      <a href="/">Home</a>
       <a href="/websites">Websites</a>
       <a href="/music" class="active">Music</a>
       <a href="/substack">Substack</a>
@@ -216,31 +331,22 @@
     const bar = document.getElementById('bar');
     const pct = document.getElementById('pct');
     const TARGET = 98.9;
-    let current = 0;
-
-    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-
     const duration = 8000;
     const start = performance.now();
-
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
     function animate(now) {
-      const elapsed = now - start;
-      const t = Math.min(elapsed / duration, 1);
-      current = easeOut(t) * TARGET;
-
+      const t = Math.min((now - start) / duration, 1);
+      const current = easeOut(t) * TARGET;
       bar.style.width = current + '%';
       pct.textContent = current.toFixed(1) + '%';
-
       if (current < TARGET) {
         requestAnimationFrame(animate);
       } else {
         bar.style.width = TARGET + '%';
         pct.textContent = TARGET + '%';
-        // Subtle pulse at 98.9% — almost there, forever
-        bar.style.boxShadow = '0 0 18px rgba(240, 120, 40, 0.8)';
+        bar.style.boxShadow = '0 5px 0 #005030, 0 10px 0 #003d24, 0 14px 0 #002c1a, 0 0 24px rgba(0,220,150,0.5)';
       }
     }
-
     requestAnimationFrame(animate);
   </script>
 </body>

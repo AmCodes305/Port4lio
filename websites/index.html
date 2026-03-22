@@ -36,7 +36,7 @@
     }
 
     .brand { display: flex; flex-direction: column; gap: 0.35rem; }
-    .brand-name { font-size: 1.15rem; font-weight: 700; color: #1c0e06; }
+    .brand-name { font-size: 1.15rem; font-weight: 700; text-decoration: none; color: #1c0e06; }
 
     nav { display: flex; gap: 1.75rem; align-items: center; padding-top: 0.15rem; }
     nav a {
@@ -189,9 +189,10 @@
 <body>
   <header>
     <div class="brand">
-      <span class="brand-name">AM World 🌍</span>
+      <a href="/" class="brand-name">AM World 🌍</a>
     </div>
     <nav>
+      <a href="/">Home</a>
       <a href="/websites" class="active">Websites</a>
       <a href="/music">Music</a>
       <a href="/substack">Substack</a>
