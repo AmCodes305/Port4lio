@@ -34,9 +34,61 @@
       position: relative;
       z-index: 1;
     }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 1.4rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+      background: var(--bg);
+    }
+
+    .brand-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.75rem;
+      align-items: center;
+    }
+
+    nav a {
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text);
+      opacity: 0.55;
+      transition: opacity 0.15s;
+    }
+
+    nav a:hover { opacity: 1; }
+    nav a.active { opacity: 1; }
+
+    main.page { padding-top: 5rem; }
+
+    @media (max-width: 560px) {
+      header { flex-direction: column; gap: 1rem; padding: 1.2rem 1.25rem; }
+      nav { gap: 1.1rem; }
+      nav a { font-size: 0.82rem; }
+    }
   </style>
 </head>
 <body>
+  <header>
+    <span class="brand-name">AM World 🌍</span>
+    <nav>
+      <a href="/websites">Websites</a>
+      <a href="/music">Music</a>
+      <a href="/substack">Substack</a>
+      <a href="/the-first-click/" class="active">TFC</a>
+    </nav>
+  </header>
+
   <div id="dvd-container">
     <div id="dvd-text">This was the first page ever created — the start of my portfolio.</div>
   </div>
