@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Substack — AM World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Barlow:wght@900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100dvh;
+      background: linear-gradient(to bottom, #b8d4e8 0%, #f5c9a0 45%, #f0a870 70%, #ffd59b 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    /* ── Header ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 1.4rem 2rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      z-index: 100;
+      background: rgba(255, 240, 220, 0.25);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .brand { display: flex; flex-direction: column; gap: 0.35rem; }
+    .brand-name { font-size: 1.15rem; font-weight: 700; color: #1c0e06; }
+
+    nav { display: flex; gap: 1.75rem; align-items: center; padding-top: 0.15rem; }
+    nav a {
+      font-size: 0.88rem; font-weight: 600; text-decoration: none;
+      color: #1c0e06; opacity: 0.6; transition: opacity 0.15s;
+    }
+    nav a:hover { opacity: 1; }
+    nav a.active { opacity: 1; }
+
+    /* ── Loading card ── */
+    .card {
+      text-align: center;
+      max-width: 560px;
+      width: 100%;
+    }
+
+    .page-label {
+      font-family: 'Barlow', system-ui, sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: #fff8f0;
+      text-shadow:
+        1px 1px 0 #b05a10,
+        2px 2px 0 #b05a10,
+        3px 3px 0 #b05a10,
+        4px 4px 0 #9a4e0c,
+        6px 6px 16px rgba(0,0,0,0.2);
+      margin-bottom: 0.5rem;
+    }
+
+    .loading-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #7a4e28;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Bar track ── */
+    .bar-track {
+      width: 100%;
+      height: 18px;
+      background: rgba(255,255,255,0.35);
+      border-radius: 999px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
+      margin-bottom: 0.75rem;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f5a020, #e06820, #c03b28);
+      box-shadow: 0 0 12px rgba(240, 120, 40, 0.6);
+      transition: width 0.05s linear;
+    }
+
+    .bar-pct {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #7a4e28;
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+    }
+
+    .subtext {
+      font-size: 0.9rem;
+      color: #7a4e28;
+      line-height: 1.6;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 2.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #7a4e28;
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      transition: color 0.15s;
+    }
+    .back:hover { color: #1c0e06; }
+
+    @media (max-width: 560px) {
+      header { flex-direction: column; gap: 1rem; padding: 1.2rem 1.25rem; }
+      nav { gap: 1.1rem; }
+      nav a { font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span class="brand-name">AM World 🌍</span>
+    </div>
+    <nav>
+      <a href="/websites">Substack</a>
+      <a href="/music">Music</a>
+      <a href="/substack" class="active">Substack</a>
+      <a href="/the-first-click/">TFC</a>
+    </nav>
+  </header>
+
+  <div class="card">
+    <div class="page-label">Substack</div>
+    <div class="loading-label">Loading...</div>
+    <div class="bar-track">
+      <div class="bar-fill" id="bar"></div>
+    </div>
+    <div class="bar-pct" id="pct">0%</div>
+    <p class="subtext">Something's being built here.<br>Check back soon.</p>
+    <a href="/" class="back">← back to AM World</a>
+  </div>
+
+  <script>
+    const bar = document.getElementById('bar');
+    const pct = document.getElementById('pct');
+    const TARGET = 98.9;
+    let current = 0;
+
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+    const duration = 3200;
+    const start = performance.now();
+
+    function animate(now) {
+      const elapsed = now - start;
+      const t = Math.min(elapsed / duration, 1);
+      current = easeOut(t) * TARGET;
+
+      bar.style.width = current + '%';
+      pct.textContent = current.toFixed(1) + '%';
+
+      if (current < TARGET) {
+        requestAnimationFrame(animate);
+      } else {
+        bar.style.width = TARGET + '%';
+        pct.textContent = TARGET + '%';
+        // Subtle pulse at 98.9% — almost there, forever
+        bar.style.boxShadow = '0 0 18px rgba(240, 120, 40, 0.8)';
+      }
+    }
+
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
